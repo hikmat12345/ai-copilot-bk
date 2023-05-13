@@ -10,7 +10,7 @@ router.post('/signup', async (req, res) => {
     const { name, mobileNumber, password, email } = req.body;
 
     // Create a new instance of the Registration model
-    const registration = new Registration({
+    const registration = new Registeration({
       name,
       mobileNumber,
       password,
