@@ -19,7 +19,7 @@ router.post('/signup', async (req, res) => {
     // Save the registration record to the database
     const savedRegistration = await registration.save();
 
-    res.status(200).json({ message: 'Registration successful', data: savedRegistration });
+    res.status(200).json({ message: 'Registration successful', userDetail: savedRegistration , statu: true });
   } catch (error) {
     res.status(500).json({ message: 'An error occurred', error: error.message });
   }
