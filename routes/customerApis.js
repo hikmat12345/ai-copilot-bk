@@ -13,10 +13,8 @@ router.post('/signup', async (req, res) => {
   })
   try {
     const loggedIn = await register.save()
-    if (res) {
-      await Registeration.findOne({ email: req.body.email }, function (err, doc) {
-        return res.status(200).send({ message:'successfuly created', userDetail: doc, optional:err, statu: true })
-      })
+    if (res) { 
+        return res.status(200).send({ message:'you are registered successfuly.', userDetail: loggedIn, optional:err, statu: true }) 
     } 
   } catch (err) {
     res.status(403).json({ message: err.message })
