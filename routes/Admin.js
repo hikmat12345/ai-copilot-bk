@@ -36,7 +36,7 @@ router.post('/user_content_save', async (req, res) => {
     user_id: req.body.user_id,
     description: req.body.description,
     boxname: req.body.boxname,
-    
+    create_at: moment().format("DD-MMM-YYYY")
   })
   try {
     const user_content = await user_content_save.save()
