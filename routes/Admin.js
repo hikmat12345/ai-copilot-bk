@@ -6,8 +6,7 @@ const Accounts = require('../models/Accounts')
 const RegisterUsers = require('../models/Registeration')
 const uploadImg = require('../src/uploader')
 const path = require('path')
-const moment = require('moment');
-  
+   
 // all none alcohlic perfume
 router.get('/user_content', async (req, res) => {
   try {
@@ -36,7 +35,7 @@ router.post('/user_content_save', async (req, res) => {
     user_id: req.body.user_id,
     description: req.body.description,
     boxname: req.body.boxname,
-    create_at: moment().format("DD-MMM-YYYY")
+    create_at: Date()
   })
   try {
     const user_content = await user_content_save.save()
