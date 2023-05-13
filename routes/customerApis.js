@@ -4,22 +4,27 @@ const Registeration = require('../models/Registeration')
 const ContactForm = require('../models/ContactForm');
  
 // create user signup 
+  
 router.post('/signup', async (req, res) => {
-  const register = new Registeration({
-    name:req.body.name,
-    mobileNumber: req.body.mobileNumber,
-    password: req.body.password,
-    email: req.body.email,
-  })
   try {
-    const loggedIn = await register.save()
-    if (res) { 
-        return res.status(200).send({ message:'you are registered successfuly.', userDetail: loggedIn, optional:err, statu: true }) 
-    } 
-  } catch (err) {
-    res.status(403).json({ message: err.message })
+    const { name, mobileNumber, password, email } = req.body;
+
+    // Create a new instance of the Registration model
+    const registration = new Registration({
+      name,
+      mobileNumber,
+      password,
+      email,
+    }); 
+    // Save the registration record to the database
+    const savedRegistration = await registration.save();
+
+    res.status(200).json({ message: 'Registration successful', data: savedRegistration });
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred', error: error.message });
   }
-})
+});
+
 
 // Admin Login
 router.post('/signin', (req, res) => {
