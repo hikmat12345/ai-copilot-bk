@@ -13,5 +13,9 @@ const user_content= new mongoose.Schema({
         type: String,
         required:[false]
     }, 
+    created_at:{
+        type: String || Number,
+        required:[false]
+    }, 
 })
 module.exports= mongoose.model("user_content", user_content)
