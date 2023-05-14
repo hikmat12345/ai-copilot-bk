@@ -78,7 +78,7 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
  
-// Contact Us
+ // Contact Us
 router.post('/contact', async (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
@@ -87,9 +87,9 @@ router.post('/contact', async (req, res) => {
   try {
     // Save the contact form data to the database
     const contactForm = new ContactForm({
-      name: name,
-      email: email,
-      message: message,
+      name,
+      email,
+      message,
     });
     await contactForm.save();
   
@@ -97,38 +97,34 @@ router.post('/contact', async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: 'mail.teachingcopilot.com',
       port: 465,
-      secure: false,
+      secure: true,
       auth: {
         user: 'hello@teachingcopilot.com',
         pass: 'Duane@cgpt123',
-      },
-      tls: {
-        rejectUnauthorized: false,
       },
     });
 
     // Send the email
     const info = await transporter.sendMail({
       from: email,
-      to: 'hikmatullahit@gmil.com',
-      subject: message,
-      text: message,
+      to: 'hikmatullahit@gmail.com',
+      subject: `New Contact Form Submission from ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     });
-      return res.status(200).send({
-      message: 'successfully sent',
+
+    console.log(`Email sent: ${info.messageId}`);
+    return res.status(200).send({
+      message: 'Your message has been sent',
       status: true,
     });
-    console.log(`Email sent: ${info.messageId}`);
   } catch (err) {
-     return res.status(200).send({
-      message: err,
+    console.error(err, 'error');
+    return res.status(500).send({
+      message: 'An error occurred while sending your message. Please try again later.',
       status: false,
     });
-  }
-
- 
- 
- 
+  } 
 });
+
  
 module.exports = router
