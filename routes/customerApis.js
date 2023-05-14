@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Registeration = require('../models/Registeration')
 const ContactForm = require('../models/ContactForm');
- 
+ const nodemailer = require('nodemailer');
+
 // create user signup 
   
 router.post('/signup', async (req, res) => {
@@ -96,13 +97,13 @@ router.post('/contact', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'your-email@gmail.com', // Replace with your Gmail email address
-        pass: 'your-password', // Replace with your Gmail password
+        user: 'mail.teachingcopilot.com', // Replace with your Gmail email address
+        pass: 'Duane@cgpt123', // Replace with your Gmail password
       },
     });
     const mailOptions = {
       from: email,
-      to: 'hik@gmil.com',
+      to: 'hikmatullahit@gmil.com',
       subject: 'New Contact Form Submission',
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     };
