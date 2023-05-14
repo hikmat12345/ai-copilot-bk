@@ -94,24 +94,24 @@ router.post('/contact', async (req, res) => {
     await contactForm.save();
 
    
-//    const transporter = nodemailer.createTransport({
-//   host: 'mail.teachingcopilot.com',
-//   port: 465, // or 587
-//   secure: true, // use SSL
-//   auth: {
-//     user: 'hello@teachingcopilot.com', // Replace with your Gmail email address
-//     pass: 'Duane@cgpt123', // Replace with your Gmail password
-//   },
-// });
+   const transporter = nodemailer.createTransport({
+    host: 'mail.teachingcopilot.com',
+    port: 465, // or 587
+    secure: true, // use SSL
+    auth: {
+      user: 'hello@teachingcopilot.com', // Replace with your Gmail email address
+      pass: 'Duane@cgpt123', // Replace with your Gmail password
+    },
+});
    
     // Send the contact form data to the specified email address
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'hello@teachingcopilot.com', // Replace with your Gmail email address
-        pass: 'Duane@cgpt123', // Replace with your Gmail password
-      },
-    });
+//     const transporter = nodemailer.createTransport({
+//       service: 'gmail',
+//       auth: {
+//         user: 'hello@teachingcopilot.com', // Replace with your Gmail email address
+//         pass: 'Duane@cgpt123', // Replace with your Gmail password
+//       },
+//     });
     const mailOptions = {
       from: email,
       to: 'hikmatullahit@gmil.com',
