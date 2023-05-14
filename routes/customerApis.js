@@ -92,11 +92,7 @@ router.post('/contact', async (req, res) => {
       message: message,
     });
     await contactForm.save();
-
- 
- 
- 
-  try {
+  
     // Create a transport object with SMTP settings
     const transporter = nodemailer.createTransport({
       host: 'mail.teachingcopilot.com',
