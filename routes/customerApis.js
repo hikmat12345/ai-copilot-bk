@@ -95,11 +95,11 @@ router.post('/contact', async (req, res) => {
   
     // Create a transport object with SMTP settings
     const transporter = nodemailer.createTransport({
-      host: 'mail.teachingcopilot.com',
+      host: 'smtp.teachingcopilot.com',
       port: 465,
       secure: true,
       auth: {
-        user: 'hello@teachingcopilot.com',
+        user: 'teachingcopilot@teachingcopilot.com',
         pass: 'Duane@cgpt123',
       },
     });
