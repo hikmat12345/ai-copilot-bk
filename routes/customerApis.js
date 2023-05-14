@@ -103,36 +103,53 @@ router.post('/contact', async (req, res) => {
       pass: 'Duane@cgpt123', // Replace with your Gmail password
     },
 });
+    
    
-    // Send the contact form data to the specified email address
-//     const transporter = nodemailer.createTransport({
-//       service: 'gmail',
-//       auth: {
-//         user: 'hello@teachingcopilot.com', // Replace with your Gmail email address
-//         pass: 'Duane@cgpt123', // Replace with your Gmail password
-//       },
+   // setup e-mail data with unicode symbols
+var mailOptions = {
+    from:email // sender address
+    to: 'hikmatullahit@gmil.com',
+    subject: 'New Contact Form Submission', // Subject line
+    text:"Name: "+name}+"\nEmail: "+email+"\nMessage: "+message,
+    html: 'Chest of world' // html body
+};
+
+// send mail with defined transport object
+nodemailer.sendMail(mailOptions, function(error, info){
+    if(error){
+        return console.log('greska:' + error)
+        return next(error);
+    } else {
+     console.log('Message sent: ' + info.response);
+     res.json(info.response);
+    }
+});
+   
+   
+   
+   
+   
+//     const mailOptions = {
+//       from: email,
+//       to: 'hikmatullahit@gmil.com',
+//       subject: 'New Contact Form Submission',
+//       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+//     };
+//     transporter.sendMail(mailOptions, function (err, info) {
+//       if (err) {
+//         console.log(err);
+//         res.status(500).send({ message: err.message });
+//       } else {
+//         console.log(info);
+//         res.status(200).send({
+//           message: 'Your message has been sent',
+//           status: true,
+//         });
+//       }
 //     });
-    const mailOptions = {
-      from: email,
-      to: 'hikmatullahit@gmil.com',
-      subject: 'New Contact Form Submission',
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-    };
-    transporter.sendMail(mailOptions, function (err, info) {
-      if (err) {
-        console.log(err);
-        res.status(500).send({ message: err.message });
-      } else {
-        console.log(info);
-        res.status(200).send({
-          message: 'Your message has been sent',
-          status: true,
-        });
-      }
-    });
-  } catch (err) {
-    res.status(500).send({ message: err.message });
-  }
+//   } catch (err) {
+//     res.status(500).send({ message: err.message });
+//   }
 });
  
 module.exports = router
