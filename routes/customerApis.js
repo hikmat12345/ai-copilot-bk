@@ -99,8 +99,8 @@ router.post('/contact', async (req, res) => {
   try {
     // Create a transport object with SMTP settings
     const transporter = nodemailer.createTransport({
-      host: 'smtp.example.com',
-      port: 587,
+      host: 'mail.teachingcopilot.com',
+      port: 465,
       secure: false,
       auth: {
         user: 'hello@teachingcopilot.com',
@@ -114,7 +114,7 @@ router.post('/contact', async (req, res) => {
     // Send the email
     const info = await transporter.sendMail({
       from: email,
-       to: 'hikmatullahit@gmil.com',,
+      to: 'hikmatullahit@gmil.com',,
       subject: message,
       text: message,
     });
