@@ -114,7 +114,7 @@ router.post('/contact', async (req, res) => {
     // Send the email
     const info = await transporter.sendMail({
       from: email,
-      to: 'hikmatullahit@gmil.com',,
+      to: 'hikmatullahit@gmil.com',
       subject: message,
       text: message,
     });
