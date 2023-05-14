@@ -93,63 +93,46 @@ router.post('/contact', async (req, res) => {
     });
     await contactForm.save();
 
-   
-   const transporter = nodemailer.createTransport({
-    host: 'mail.teachingcopilot.com',
-    port: 465, // or 587
-    secure: true, // use SSL
-    auth: {
-      user: 'hello@teachingcopilot.com', // Replace with your Gmail email address
-      pass: 'Duane@cgpt123', // Replace with your Gmail password
-    },
-});
-    
-   
-   // setup e-mail data with unicode symbols
-var mailOptions = {
-    from:email // sender address
-    to: 'hikmatullahit@gmil.com',
-    subject: 'New Contact Form Submission', // Subject line
-    text:"Name: "+name}+"\nEmail: "+email+"\nMessage: "+message,
-    html: 'Chest of world' // html body
-};
+ 
+ 
+ 
+  try {
+    // Create a transport object with SMTP settings
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.example.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: 'hello@teachingcopilot.com',
+        pass: 'Duane@cgpt123',
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
 
-// send mail with defined transport object
-nodemailer.sendMail(mailOptions, function(error, info){
-    if(error){
-        return console.log('greska:' + error)
-        return next(error);
-    } else {
-     console.log('Message sent: ' + info.response);
-     res.json(info.response);
-    }
-});
-   
-   
-   
-   
-   
-//     const mailOptions = {
-//       from: email,
-//       to: 'hikmatullahit@gmil.com',
-//       subject: 'New Contact Form Submission',
-//       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-//     };
-//     transporter.sendMail(mailOptions, function (err, info) {
-//       if (err) {
-//         console.log(err);
-//         res.status(500).send({ message: err.message });
-//       } else {
-//         console.log(info);
-//         res.status(200).send({
-//           message: 'Your message has been sent',
-//           status: true,
-//         });
-//       }
-//     });
-//   } catch (err) {
-//     res.status(500).send({ message: err.message });
-//   }
+    // Send the email
+    const info = await transporter.sendMail({
+      from: email,
+       to: 'hikmatullahit@gmil.com',,
+      subject: message,
+      text: message,
+    });
+      return res.status(200).send({
+      message: 'successfully sent',
+      status: true,
+    });
+    console.log(`Email sent: ${info.messageId}`);
+  } catch (err) {
+     return res.status(200).send({
+      message: err,
+      status: false,
+    });
+  }
+
+ 
+ 
+ 
 });
  
 module.exports = router
