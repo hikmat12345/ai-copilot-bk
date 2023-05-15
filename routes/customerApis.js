@@ -101,10 +101,7 @@ router.post('/contact', async (req, res) => {
          auth: {
            user: "hello@techingcopilot.com",
            pass: "Duane@cgpt123" 
-       },
-       tls: {
-            rejectUnauthorized: false 
-       }
+       }, 
     });
  
     let sendMessage = {
