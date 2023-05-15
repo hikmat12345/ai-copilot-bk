@@ -127,6 +127,7 @@ router.post('/contact', async (req, res) => {
         return res.status(200).send({
          message: 'Your message has been sent',
          status: true,
+         err:err
        });
     }); 
    
