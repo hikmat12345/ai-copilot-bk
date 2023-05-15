@@ -99,7 +99,7 @@ router.post('/contact', async (req, res) => {
         port: 465,
         secure: false,
          auth: {
-           user: "hello@techingcopilot.com",
+           user: "hello@teachingcopilot.com",
            pass: "Duane@cgpt123" 
        }, 
     });
