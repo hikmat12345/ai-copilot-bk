@@ -117,7 +117,7 @@ router.post('/contact', async (req, res) => {
             <h1>Request for: ${ "No title"}</h1>
             <span>Name: ${name}</span><br/>
             <span>Email: ${email}</span><br/>
-            <span>Phone: ${phone || "No phone"}</span><br/>
+            <span>Phone: ${ "No phone"}</span><br/>
             <span>Message:</span><br/>
             <p>${message || "No message"}</p>
         <hr />
