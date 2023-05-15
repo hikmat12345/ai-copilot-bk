@@ -92,31 +92,44 @@ router.post('/contact', async (req, res) => {
       message,
     });
     await contactForm.save();
-  
-    // Create a transport object with SMTP settings
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.teachingcopilot.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: 'teachingcopilot@teachingcopilot.com',
-        pass: 'Duane@cgpt123',
-      },
+    
+   const transporter = nodemailer.createTransport({
+        service:"goDaddy",
+        host: "smtp.office365.com",
+        port: "587",
+        secure: false,
+        requireTLS: true,
+        auth: {
+           user: "hello@techingcopilot.com",
+           pass: "Duane@cgpt123" 
+       },
+       tls: {
+            rejectUnauthorized: false 
+       }
     });
-
-    // Send the email
-    const info = await transporter.sendMail({
-      from: email,
-      to: 'hikmatullahit@gmail.com',
-      subject: `New Contact Form Submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-    });
-
-    console.log(`Email sent: ${info.messageId}`);
-    return res.status(200).send({
-      message: 'Your message has been sent',
-      status: true,
-    });
+ 
+    let sendMessage = {
+        from: `${email}`,
+        to: "hikmatullahit@gmail.com",
+        subject: "Enquiry from Deane Project Management",
+        html: `
+        <hr />
+            <h1>Request for: ${ "No title"}</h1>
+            <span>Name: ${name}</span><br/>
+            <span>Email: ${email}</span><br/>
+            <span>Phone: ${phone || "No phone"}</span><br/>
+            <span>Message:</span><br/>
+            <p>${message || "No message"}</p>
+        <hr />
+        ` }
+ 
+    transporter.sendMail(sendMessage, function (err, info) {
+        return res.status(200).send({
+         message: 'Your message has been sent',
+         status: true,
+       });
+    }); 
+   
   } catch (err) {
     console.error(err, 'error');
     return res.status(500).send({
