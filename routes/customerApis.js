@@ -106,7 +106,7 @@ router.post('/contact', async (req, res) => {
  
     let sendMessage = {
         from: `${email}`,
-        to: "hikmatullahit@gmail.com",
+        to: "hello@teachingcopilot.com",
         subject: "Enquiry from Deane Project Management",
         html: `
         <hr />
@@ -123,7 +123,8 @@ router.post('/contact', async (req, res) => {
         return res.status(200).send({
          message: 'Your message has been sent',
          status: true,
-         err:err
+         err:err,
+         info:info
        });
     }); 
    
