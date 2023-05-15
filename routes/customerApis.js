@@ -96,10 +96,9 @@ router.post('/contact', async (req, res) => {
    const transporter = nodemailer.createTransport({
         service:"goDaddy",
         host: "smtp.office365.com",
-        port: "587",
+        port: 465,
         secure: false,
-        requireTLS: true,
-        auth: {
+         auth: {
            user: "hello@techingcopilot.com",
            pass: "Duane@cgpt123" 
        },
