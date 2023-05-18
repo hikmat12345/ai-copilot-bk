@@ -15,7 +15,7 @@ const user_content= new mongoose.Schema({
     }, 
     created_at:{
         type : Date, 
-        default: Date.now
+        default: Date.now,
         required:[false]
     }, 
 })
