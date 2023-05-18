@@ -9,12 +9,13 @@ const user_content= new mongoose.Schema({
         type: String,
         required:[false]
     },
-    box_name:{
+    boxname:{
         type: String,
         required:[false]
     }, 
     created_at:{
-        type: String || Number,
+        type : Date, 
+        default: Date.now
         required:[false]
     }, 
 })
