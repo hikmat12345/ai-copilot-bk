@@ -51,7 +51,7 @@ router.delete(
   removeuser_content,
   async (req, res) => {
     try {
-      await res.alcolicPer.remove()
+      await res.noneAlochlic.remove()
       res.json({ message: 'Deleted record' })
     } catch (err) {
       res.status(500).json({ message: err.message })
