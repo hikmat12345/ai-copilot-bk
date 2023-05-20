@@ -47,7 +47,7 @@ router.post('/user_content_save', async (req, res) => {
  
 // Deleting One
 router.delete(
-  '/user_content_deleted/:id',
+  '/user_content_deleted/:user_id',
   removeuser_content,
   async (req, res) => {
     try {
@@ -125,7 +125,7 @@ async function alcohlicMiddleFunc(req, res, next) {
 async function removeuser_content(req, res, next) {
   let noneAlochlic
   try {
-    noneAlochlic = await user_content.findById(req.params.id)
+    noneAlochlic = await user_content.findById(req.params.user_id)
     if (noneAlochlic == null) {
       return res.status(404).json({ message: 'Cannot find record' })
     } 
