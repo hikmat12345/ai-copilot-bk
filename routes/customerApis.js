@@ -54,7 +54,7 @@ router.post('/signin', (req, res) => {
   })
 })
  
-// Forgot Password
+// Forgot Password 
 router.post('/forgot-password', async (req, res) => {
   const email = req.body.email;
   try {
@@ -70,7 +70,7 @@ router.post('/forgot-password', async (req, res) => {
     await user.save(); // Save the new password to the user document in the database
     // Send the new password to the user via email or other means
     return res.status(200).send({
-      message: 'successfully',
+      message: 'new password has been created',
       status: true,
     });
   } catch (err) {
@@ -78,6 +78,54 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
  
+// Check if email exists in the database
+router.post('/check-email', async (req, res) => {
+  const email = req.body.email;
+  try {
+    const user = await Registeration.findOne({ email: email });
+    if (!user) {
+      return res.status(404).send({
+        message: 'Email not found',
+        status: false,
+      });
+    }
+    return res.status(200).send({
+      message: 'Email found',
+      status: true,
+    });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
+
+// Update user profile by ID
+router.patch('/updateprofile/:id', async (req, res) => {
+  const updates = Object.keys(req.body);
+    
+  try {
+    const user = await Registeration.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    updates.forEach((update) => (user[update] = req.body[update]));
+    await user.save(); 
+    res.json({
+      message: 'Profile updated successfully',
+      statu: true,
+      userDetail:user,
+    });
+  } catch (err) {
+    res.status(400).json({ message: err.message ,  statu: false,});
+  }
+}); 
+
+
+
+
+
+
  // Contact Us
 router.post('/contact', async (req, res) => {
   const name = req.body.name;
