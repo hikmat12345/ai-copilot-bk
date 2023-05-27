@@ -198,7 +198,7 @@ const calculateOrderAmount = (items) => {
 };
 
 router.post("/create-payment-intent", async (req, res) => {
- const { name, address, email ,city, postcode, userid, amount, id, } = req.body;
+ const { name, address, email ,city, postcode, userid, amount, id,planId } = req.body;
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
@@ -211,7 +211,7 @@ router.post("/create-payment-intent", async (req, res) => {
 
     // Create a new instance of the Registration model
     const paymentData = new payment({
-       name, address, email ,city, postcode, userid, amount, id, clientSecret: paymentIntent.client_secret,
+       name, address, email ,city, postcode, userid, amount, id, clientSecret: paymentIntent.client_secret,planId
     }); 
     // Save the registration record to the database
     const paymentSaved = await paymentData.save();
