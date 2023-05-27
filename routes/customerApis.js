@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Registeration = require('../models/Registeration')
 const ContactForm = require('../models/ContactForm');
+const payment = require('../models/payment');
+
  const nodemailer = require('nodemailer');
 
 // create user signup 
@@ -192,25 +194,31 @@ router.post('/contact', async (req, res) => {
 const stripe = require("stripe")('sk_test_51IvIySJzkqBjcDrui1qhWY4fSTiWESTIQoRQe6VsC9Y0bLUlolgEFmOsH7NeNABBX0IxMxvJpXwTZiQ2LsQBFVwA00a7zZipf3');
   
 const calculateOrderAmount = (items) => { 
-  return 1400;
+  return items;
 };
 
 router.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
+ const { name, address, email ,city, postcode, userid, amount, id, } = req.body;
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
+    amount: calculateOrderAmount(amount),
     currency: "usd",
     automatic_payment_methods: {
       enabled: true,
     },
   });
 
+    // Create a new instance of the Registration model
+    const paymentData = new payment({
+       name, address, email ,city, postcode, userid, amount, id, clientSecret: paymentIntent.client_secret,
+    }); 
+    // Save the registration record to the database
+    const paymentSaved = await paymentData.save();
   res.json({
-      message: 'payment successfuly',
-      statu: true, 
-      clientSecret: paymentIntent.client_secret,
+      message: 'payment successfuly done',
+      statu: true,  
+      payment: paymentSaved,
     }); 
 });
  
