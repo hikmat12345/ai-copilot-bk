@@ -185,5 +185,34 @@ router.post('/contact', async (req, res) => {
   } 
 });
 
+
+
+
+ 
+const stripe = require("stripe")('sk_test_51IvIySJzkqBjcDrui1qhWY4fSTiWESTIQoRQe6VsC9Y0bLUlolgEFmOsH7NeNABBX0IxMxvJpXwTZiQ2LsQBFVwA00a7zZipf3');
+  
+const calculateOrderAmount = (items) => { 
+  return 1400;
+};
+
+router.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "usd",
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.json({
+      message: 'payment successfuly',
+      statu: true, 
+      clientSecret: paymentIntent.client_secret,
+    }); 
+});
+ 
  
 module.exports = router
