@@ -197,6 +197,16 @@ const calculateOrderAmount = (items) => {
   return items;
 };
 
+
+router.get('/get_all_payments', async (req, res) => {
+  try {
+    const paymentdata = await payment.find()
+     res.status(500).json({status:true, payment:paymentdata})
+  } catch (err) {
+    res.status(500).json({status:true, message:err, payment:null})
+  }
+})
+
 router.post("/create-payment-intent", async (req, res) => {
  const { name, address, email ,city, postcode, userid, amount, id,planId } = req.body;
 
