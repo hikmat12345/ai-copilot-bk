@@ -37,7 +37,11 @@ const mongoose = require('mongoose')
         type:String,
         required:[false]
     },
-  
+   created_at:{
+        type : Date, 
+        default: Date.now,
+        required:[false]
+    }, 
 })
 
 module.exports = mongoose.model('payment', payment)
