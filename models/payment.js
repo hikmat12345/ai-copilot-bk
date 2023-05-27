@@ -41,6 +41,18 @@ const mongoose = require('mongoose')
         type:Number,
         required:[false]
     },
+   duration:{
+        type:Number,
+        required:[false]
+    },
+   startDate:{
+        type:String,
+        required:[false]
+    },
+   endDate:{
+        type:String,
+        required:[false]
+    }, 
    created_at:{
         type : Date, 
         default: Date.now,
