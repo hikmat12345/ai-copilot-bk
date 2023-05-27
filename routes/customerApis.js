@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Registeration = require('../models/Registeration')
 const ContactForm = require('../models/ContactForm');
-const payment = require('../models/payment');
+const payment = require('../models/payment'); 
 
  const nodemailer = require('nodemailer');
 
@@ -207,8 +207,34 @@ router.get('/get_all_payments', async (req, res) => {
   }
 })
 
+
+// GET API to check if the user's plan is active
+router.get('/check-plan-status/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const currentDate = moment().startOf('day');
+
+  try {
+    // Find the latest payment record for the user from the database
+    const latestPayment = await payment.findOne({ userid:userId }).sort({ startDate: -1 });
+
+    if (!latestPayment) {
+      return res.json({ isActive: false });
+    }
+
+    const { startDate, endDate } = latestPayment;
+
+    const isActive = currentDate.isBetween(startDate, endDate, null, '[]');
+
+    res.json({ currentPlan_status:isActive });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve plan data.' });
+  }
+});
+
+
+
 router.post("/create-payment-intent", async (req, res) => {
- const { name, address, email ,city, postcode, userid, amount, id,planId } = req.body;
+ const { name, address, email ,city, postcode, userid, amount, id, planId, duration} = req.body;
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
@@ -218,10 +244,13 @@ router.post("/create-payment-intent", async (req, res) => {
       enabled: true,
     },
   });
+  const currentDate = moment().startOf('day');
+ const startDate = currentDate.clone().toDate();
+  const endDate = currentDate.clone().add(duration, 'days').toDate();
 
     // Create a new instance of the Registration model
     const paymentData = new payment({
-       name, address, email ,city, postcode, userid, amount, id, clientSecret: paymentIntent.client_secret,planId
+       name, address, email ,city, postcode, userid, amount, id, clientSecret: paymentIntent.client_secret,planId,duration, startDate, endDate 
     }); 
     // Save the registration record to the database
     const paymentSaved = await paymentData.save();
