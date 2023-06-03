@@ -209,28 +209,34 @@ router.get('/get_all_payments', async (req, res) => {
 })
 
 
-// GET API to check if the user's plan is active
+// GET API to check if the user's plan is active 
+
+// Assuming you have already connected to your MongoDB and have the 'payment' collection available
+
 router.get('/check-plan-status/:userId', async (req, res) => {
   const { userId } = req.params;
   const currentDate = moment().startOf('day');
+  const thirtyDaysAgo = moment().subtract(30, 'days').startOf('day');
 
   try {
     // Find the latest payment record for the user from the database
-    const latestPayment = await payment.findOne({ userid:userId }).sort({ startDate: -1 });
+    const latestPayment = await payment.findOne({ userid: userId }).sort({ startDate: -1 });
 
     if (!latestPayment) {
       return res.json({ isActive: false });
     }
 
-    const { startDate, endDate } = latestPayment;
+    const { startDate } = latestPayment;
+    const endDate = moment(startDate).add(30, 'days').startOf('day');
 
     const isActive = currentDate.isBetween(startDate, endDate, null, '[]');
 
-    res.json({ currentPlan_status:isActive });
+    res.json({ currentPlanStatus: isActive });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve plan data.' });
   }
 });
+ 
 
 
 
