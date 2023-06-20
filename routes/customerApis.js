@@ -195,7 +195,7 @@ router.post('/contact', async (req, res) => {
 const stripe = require("stripe")('sk_test_51IvIySJzkqBjcDrui1qhWY4fSTiWESTIQoRQe6VsC9Y0bLUlolgEFmOsH7NeNABBX0IxMxvJpXwTZiQ2LsQBFVwA00a7zZipf3');
   
 const calculateOrderAmount = (items) => { 
-  return items;
+  return 1400;
 };
 
 
@@ -247,6 +247,7 @@ router.post("/create-payment-intent", async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: calculateOrderAmount(amount),
     currency: "usd",
+    interval: 'month',
     automatic_payment_methods: {
       enabled: true,
     },
