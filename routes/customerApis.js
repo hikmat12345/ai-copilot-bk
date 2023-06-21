@@ -326,8 +326,7 @@ const createSubscription =   (createSubscriptionRequest, res)=> {
 
     // return the client secret and subscription id
     return  res.json({
-      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
-      subscriptionId: subscription.id,
+       result:"success"
     });
   }
 
