@@ -295,7 +295,7 @@ router.post('/create-checkout-session', async (req, res) => {
 const createSubscription= async (createSubscriptionRequest)= {
  
     // create a stripe customer
-    const customer = await this.stripe.customers.create({
+    const customer = await stripe.customers.create({
       name: createSubscriptionRequest.name,
       email: createSubscriptionRequest.email,
       payment_method: createSubscriptionRequest.id,
@@ -309,7 +309,7 @@ const createSubscription= async (createSubscriptionRequest)= {
     const priceId = "price_1NLNoSJzkqBjcDruuy8ZBOFW";
 
     // create a stripe subscription
-    const subscription = await this.stripe.subscriptions.create({
+    const subscription = await  stripe.subscriptions.create({
       customer: customer.id,
       items: [{ price: priceId }],
       payment_settings: {
@@ -325,10 +325,10 @@ const createSubscription= async (createSubscriptionRequest)= {
     });
 
     // return the client secret and subscription id
-    return {
+    return  res.json({
       clientSecret: subscription.latest_invoice.payment_intent.client_secret,
       subscriptionId: subscription.id,
-    };
+    });
   }
 
 
