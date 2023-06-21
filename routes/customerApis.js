@@ -277,8 +277,7 @@ router.post('/create-checkout-session', async (req, res) => {
     payment_method_types: ['card'],
     line_items: [
       // Add line items to specify the products or services being purchased
-      // For example:
-      // { price: 'price_12345', quantity: 1 },
+       { price: 'price_12345', quantity: 1 },
     ],
     mode: 'payment',
     success_url: 'https://teachingcopilot.com/upgrade',
