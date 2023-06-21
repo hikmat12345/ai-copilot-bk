@@ -271,7 +271,7 @@ router.post("/create-payment-intent", async (req, res) => {
 
 
 
-route.post('/create-checkout-session', async (req, res) => {
+router.post('/create-checkout-session', async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [
