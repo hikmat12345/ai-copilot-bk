@@ -292,7 +292,7 @@ router.post('/create-checkout-session', async (req, res) => {
 
 
 
-const createSubscription= async (createSubscriptionRequest)= {
+const createSubscription= async (createSubscriptionRequest, res)= {
  
     // create a stripe customer
     const customer = await stripe.customers.create({
@@ -334,7 +334,7 @@ const createSubscription= async (createSubscriptionRequest)= {
 
 router.post('/create-subscription', ( req  ,res ) => {
 
-    createSubscription(req.body);
+    createSubscription(req.body, res);
 
 })
 module.exports = router
