@@ -292,7 +292,7 @@ router.post('/create-checkout-session', async (req, res) => {
 
 
 
-const createSubscription =   (createSubscriptionRequest, res)= {
+const createSubscription =   (createSubscriptionRequest, res)=> {
    console.log(createSubscriptionRequest, 'createSubscriptionRequest')
     // create a stripe customer
     const customer =   stripe.customers.create({
