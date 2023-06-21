@@ -279,7 +279,7 @@ router.post('/create-checkout-session', async (req, res) => {
       // Add line items to specify the products or services being purchased
        { price: 'price_1NLNoSJzkqBjcDruuy8ZBOFW', quantity: 1 },
     ],
-    mode: 'payment',
+     mode: 'subscription',
     success_url: 'https://teachingcopilot.com/upgrade',
     cancel_url: 'https://teachingcopilot.com/cancel',
   });
