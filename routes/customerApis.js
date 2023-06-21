@@ -268,6 +268,23 @@ router.post("/create-payment-intent", async (req, res) => {
       payment: paymentSaved,
     }); 
 });
- 
+
+
+
+route.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: [
+      // Add line items to specify the products or services being purchased
+      // For example:
+      // { price: 'price_12345', quantity: 1 },
+    ],
+    mode: 'payment',
+    success_url: 'https://teachingcopilot.com/upgrade',
+    cancel_url: 'https://teachingcopilot.com/cancel',
+  });
+
+  res.json({ id: session.id });
+});
  
 module.exports = router
