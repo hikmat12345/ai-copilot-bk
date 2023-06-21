@@ -335,7 +335,7 @@ async createSubscription(createSubscriptionRequest) {
 
 router.post('/create-subscription', ( req  ,res ) => {
 
-    createSubscription(req);
+    createSubscription(req.body);
 
 })
 module.exports = router
