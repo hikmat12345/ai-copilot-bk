@@ -293,17 +293,17 @@ router.post('/create-checkout-session', async (req, res) => {
 
 
 const createSubscription =   (createSubscriptionRequest, res)=> {
-   console.log(createSubscriptionRequest, 'createSubscriptionRequest')
     // create a stripe customer
     const customer =   stripe.customers.create({
       name: createSubscriptionRequest.name,
       email: createSubscriptionRequest.email,
-      payment_method: createSubscriptionRequest.id,
+      payment_method: createSubscriptionRequest.paymentMethod,
       invoice_settings: {
-        default_payment_method: createSubscriptionRequest.id,
+        default_payment_method: createSubscriptionRequest.paymentMethod,
       },
     });
 
+   console.log(customer, 'customer')
 
     // get the price id from the front-end
     const priceId = "price_1NLNoSJzkqBjcDruuy8ZBOFW";
