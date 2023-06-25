@@ -6,7 +6,7 @@ const Accounts = require('../models/Accounts')
 const RegisterUsers = require('../models/Registeration')
 const uploadImg = require('../src/uploader')
 const path = require('path')
-   
+const trackcredits = require('../models/trackcredits')
 // all none alcohlic perfume
 router.get('/user_content', async (req, res) => {
   try {
@@ -136,5 +136,76 @@ async function removeuser_content(req, res, next) {
   res.noneAlochlic = noneAlochlic
   next()
 }
+
+
+// Create track credits
+router.post('/track_user_free_credits', async (req, res) => {
+  try {
+    const u = new trackcredits({
+      user_id: req.body.user_id,
+      trackcredits: req.body.trackfreecredits,
+      created_at: new Date()
+    });
+
+    const user_content = await u.save();
+    res.status(201).json({ message: 'Successfully created', error: false });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Update track credits (add specified number)
+router.put('/track_user_free_credits/:user_id/add', async (req, res) => {
+  try {
+    const user_content = await trackcredits.findOneAndUpdate(
+      { user_id: req.params.user_id },
+      { $inc: { trackcredits: req.body.addCredits } },
+      { new: true }
+    );
+
+    if (!user_content) {
+      return res.status(404).json({ message: 'Track credits not found' });
+    }
+
+    res.status(200).json({ message: 'Successfully updated', error: false });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Delete track credits (subtract one)
+router.put('/track_user_free_credits/:user_id/delete', async (req, res) => {
+  try {
+    const user_content = await trackcredits.findOneAndUpdate(
+      { user_id: req.params.user_id },
+      { $inc: { trackcredits: -1 } },
+      { new: true }
+    );
+
+    if (!user_content) {
+      return res.status(404).json({ message: 'Track credits not found' });
+    }
+
+    res.status(200).json({ message: 'Successfully deleted', error: false });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+}); 
+
+
+// Get track credits for a user
+router.get('/track_user_free_credits/:user_id', async (req, res) => {
+  try {
+    const user_content = await trackcredits.findOne({ user_id: req.params.user_id });
+
+    if (!user_content) {
+      return res.status(404).json({ message: 'Track credits not found' });
+    }
+
+    res.status(200).json({ trackcredits: user_content.trackcredits, error: false });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 module.exports = router
