@@ -324,7 +324,7 @@ const createSubscription =   (createSubscriptionRequest, res)=> {
         save_default_payment_method: 'on_subscription',
       },
       expand: ['latest_invoice.payment_intent'],
-    });
+    }); 
 
     // return the client secret and subscription id
     return  res.json({
