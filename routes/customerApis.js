@@ -329,8 +329,8 @@ const createSubscription = async (createSubscriptionRequest, res)=> {
     // return the client secret and subscription id
     return  res.json({
        result:"success" ,
-       clientSecret: subscription,
-       subscriptionId: subscription.id, 
+       clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+      subscriptionId: subscription.id,
     });
    } catch(e){
     console.log(e, 'errors')
