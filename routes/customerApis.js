@@ -339,8 +339,16 @@ const createSubscription = async (createSubscriptionRequest, res)=> {
 
 
 router.post('/create-subscription', ( req  ,res ) => {
-
     createSubscription(req.body, res);
-
 })
+
+router.get('/payments', async (req, res) => {
+  try {
+    const payments = await stripe.paymentIntents.list();
+    res.json(payments.data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router
