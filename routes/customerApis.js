@@ -326,7 +326,9 @@ const createSubscription =   (createSubscriptionRequest, res)=> {
 
     // return the client secret and subscription id
     return  res.json({
-       result:"success"
+       result:"success" ,
+       clientSecret: subscription,
+       subscriptionId: subscription.id, 
     });
   }
 
