@@ -292,11 +292,11 @@ router.post('/create-checkout-session', async (req, res) => {
 
 
 
-const createSubscription =   (createSubscriptionRequest, res)=> {
+const createSubscription = async (createSubscriptionRequest, res)=> {
     // create a stripe customer
    try{
     
-    const customer =   stripe.customers.create({
+    const customer = await  stripe.customers.create({
       name: createSubscriptionRequest.name,
       email: createSubscriptionRequest.email,
       payment_method: createSubscriptionRequest.paymentMethod,
@@ -311,7 +311,7 @@ const createSubscription =   (createSubscriptionRequest, res)=> {
     const priceId = "price_1NLNoSJzkqBjcDruuy8ZBOFW";
 
     // create a stripe subscription
-    const subscription =    stripe.subscriptions.create({
+    const subscription = await   stripe.subscriptions.create({
       customer: customer.id,
       items: [{ price: priceId }],
       payment_settings: {
