@@ -29,6 +29,8 @@ router.post('/user_content', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+
 // Creating one
 router.post('/user_content_save', async (req, res) => {
   const user_content_save = new user_content({
@@ -39,7 +41,7 @@ router.post('/user_content_save', async (req, res) => {
   })
   try {
     const user_content = await user_content_save.save()
-    res.status(201).json({ message: 'successfuly created', error: false })
+    res.status(200).json({ message: 'successfuly created ',user_content:user_content, error: false })
   } catch (err) {
     res.status(400).json({ message: err.message })
   }
@@ -148,7 +150,13 @@ router.post('/track_user_free_credits', async (req, res) => {
     });
 
     const user_content = await u.save();
-    res.status(201).json({ message: 'Successfully created', error: false });
+     if (user_content) {
+        res.status(200).json({ message: 'Successfully created ',user_content:user_content, error: false });
+  } else {
+        res.status(200).json({ message: 'not saved for some reason ',user_content:user_content, error: true });
+  }
+
+    
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
