@@ -239,7 +239,7 @@ router.get('/check-plan-status/:userId', async (req, res) => {
  
 
 
-
+// save the transaction own db and in stripe as well
 router.post("/create-payment-intent", async (req, res) => {
  const { name, address, email ,city, postcode, userid, amount, id, planId, duration} = req.body;
 
@@ -259,6 +259,29 @@ router.post("/create-payment-intent", async (req, res) => {
     // Create a new instance of the Registration model
     const paymentData = new payment({
        name, address, email ,city, postcode, userid, amount, id, clientSecret: paymentIntent.client_secret,planId,duration, startDate, endDate 
+    }); 
+    // Save the registration record to the database
+    const paymentSaved = await paymentData.save();
+  res.json({
+      message: 'payment successfuly done',
+      statu: true,  
+      payment: paymentSaved,
+    }); 
+});
+
+
+// save the transaction own db only
+router.post("/create-payment-OwnDb", async (req, res) => {
+ const { name, address, email ,city, postcode, userid, amount, id, planId, duration} = req.body;
+
+  
+  const currentDate = moment().startOf('day');
+ const startDate = currentDate.clone().toDate();
+  const endDate = currentDate.clone().add(duration, 'days').toDate();
+
+    // Create a new instance of the Registration model
+    const paymentData = new payment({
+       name, address, email ,city, postcode, userid, amount, id, clientSecret: "", planId,duration, startDate, endDate 
     }); 
     // Save the registration record to the database
     const paymentSaved = await paymentData.save();
